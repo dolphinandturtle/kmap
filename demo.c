@@ -1,23 +1,6 @@
 #include <stdio.h>
-#include "lib/marray.h"
-#include "lib/kadane.h"
-
-struct Args {
-    size_t n;
-    size_t* a;
-};
-
-void times2(void* p, void* args) {
-    *(int*)p *= 2;
-    print_row(((struct Args*)args)->n, ((struct Args*)args)->a);
-    return;
-}
-
-void add(void* p1, void* p2, void* args) {
-    *(int*)p1 += *(int*)p2;
-    print_row(((struct Args*)args)->n, ((struct Args*)args)->a);
-    return;
-}
+#include "src/loop.h"
+#include "src/kadane.h"
 
 int main(void) {
 
@@ -31,14 +14,14 @@ int main(void) {
         {{7, 8}, {9, 10}, {11, 12}},
         {{13, 14}, {15, 16}, {17, 18}}
     };
-    struct Args args = {3 * 3 * 2, (size_t*)tensor};
-    printf("Uniform multiplication by 2:\n");
-    marray_uniform(sizeof(size_t), 3, (size_t []){3, 3, 2}, tensor, times2, (void*)&args);
-    printf("\n");
 
-    printf("Adding two multi-arrays together:\n");
-    marray_reduce(sizeof(size_t), 3, (size_t []){3, 3, 2}, tensor, tensor2, add, (void*)&args);
-    printf("\n");
+    for (
+        struct MultiIndex loop = multi_index_init(3, (size_t[]){0, 0, 0}, (size_t[]){3, 3, 2});
+        multi_index_conditional(&loop);
+        multi_index_iteration(&loop)
+    ) {
+        print_row(3, loop.index);
+    }
 
     int M[6][6] = {
         { +1,  +1,  +1,  +1,  +1,  +1},
