@@ -18,20 +18,30 @@ int kadane_1d(size_t n, int a[n]) {
     return xmax;
 }
 
+static void zero1d(size_t n, int a[n]) {
+    for (int i = 0; i < n; i++) {
+        a[i] = 0;
+    }
+    return;
+}
+
+static void add1d(size_t n, int a[n], const int b[n]) {
+    for (int i = 0; i < n; i++) {
+        a[i] += b[i];
+    }
+    return;
+}
+
+#include <stdio.h>
+
 int kadane_2d(size_t m, size_t n, int M[m][n]) {
     int xmax = INT_MIN;
-    int temp[m];
-    for (int left = 0; left < n; left++) {
-        // Zero temp
-        for (int i = 0; i < m; i++) {
-            temp[i] = 0;
-        }
-        for (int right = left; right < n; right++) {
-            // Summing the column
-            for (int i = 0; i < m; i++) {
-                temp[i] += M[i][right];
-            }
-            xmax = max(kadane_1d(m, temp), xmax);
+    int acc[n];
+    for (int l = 0; l < m; l++) {
+        zero1d(n, acc);
+        for (int r = l; r < m; r++) {
+            add1d(n, acc, M[r]);
+            xmax = max(kadane_1d(n, acc), xmax);
         }
     }
     return xmax;
