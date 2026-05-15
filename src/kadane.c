@@ -32,8 +32,6 @@ static void add1d(size_t n, int a[n], const int b[n]) {
     return;
 }
 
-#include <stdio.h>
-
 int kadane_2d(size_t m, size_t n, int M[m][n]) {
     int xmax = INT_MIN;
     int acc[n];
@@ -45,9 +43,4 @@ int kadane_2d(size_t m, size_t n, int M[m][n]) {
         }
     }
     return xmax;
-}
-
-int kadane_nd(size_t n, size_t dim[n], int* T) {
-    assert(0 && "This function hasn't been implemented yet.");
-    return 0;
 }
