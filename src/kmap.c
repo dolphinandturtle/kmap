@@ -1,3 +1,5 @@
+#include <assert.h>
+#include <stddef.h>
 #include <stdbool.h>
 
 static bool is_pow2(int x) {
