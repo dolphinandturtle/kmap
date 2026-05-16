@@ -28,7 +28,7 @@ void kadane_kmap(size_t m, size_t n, bool kmap[m][n], int kadane[m][n]) {
             // This encoding is NOT space-optimal,
             // but IS time-optimal being that it
             // is of the local kind.
-            kadane[i][j] = (kmap[i][j]) ? 1 : -(m + n);
+            kadane[i][j] = (kmap[i][j]) ? 1 : -(m * n);
         }
     }
     return;
